@@ -1,0 +1,147 @@
+.category {
+  width: 650px;
+  display: flex;
+  flex-direction: column;
+  background: #171b1f;
+  border-radius: 15px;
+  color: #fafafa;
+  overflow: hidden;
+  max-height: 3.85rem;
+  transition: max-height 0.25s, background 0.2s, color 0.2s;
+
+  &.dark {
+    background: #fafafa;
+    color: #171b1f;
+
+    .body {
+      tbody {
+        tr {
+          &:hover {
+            background-color: #dad9d9;
+          }
+        }
+
+        .selectBox {
+          border: 0.5px solid #171b1f;
+          &.selected {
+            background-color: #171b1f;
+          }
+        }
+      }
+    }
+  }
+
+  &.expanded {
+    max-height: 500px;
+
+    .expand {
+      transform: rotate(180deg) !important;
+      &:hover {
+        transform: rotate(180deg) scale(1.2) !important;
+      }
+    }
+  }
+
+  &.light {
+    background: #f080ff;
+  }
+  .header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 20px;
+    padding: 1rem;
+
+    .title {
+    }
+    .expand {
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: all 0.1s ease-in-out;
+      &:hover {
+        transform: scale(1.2);
+      }
+    }
+  }
+  .body {
+    width: 100%;
+    table {
+      table-layout: fixed !important;
+    }
+    thead {
+      .tableHeader {
+        background-color: rgba($color: #f080ff, $alpha: 0.15);
+        th {
+          font-size: 17px;
+          font-weight: normal;
+          white-space: nowrap;
+          font-weight: 600;
+        }
+      }
+    }
+
+    tbody {
+      tr {
+        &:hover {
+          background-color: rgb(82 82 82 / 1);
+        }
+
+        &:last-child {
+          border: none;
+        }
+      }
+    }
+
+    .selectBox {
+      aspect-ratio: 1 / 1;
+      width: 1rem;
+      border: 0.5px solid #fafafa;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.1s ease-in-out;
+
+      &.cantSelect {
+        cursor: not-allowed;
+        background-color: rgb(177, 177, 177);
+      }
+
+      &.selected {
+        background-color: #fafafa;
+      }
+    }
+
+    .small {
+      font-size: 13px;
+    }
+
+    .medium {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .status {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0.1rem 0.5rem;
+      font-size: 11px;
+      font-weight: 600;
+      border-radius: 25px;
+      width: fit-content;
+      white-space: nowrap;
+      &.success {
+        background-color: #29cc39;
+        color: #16641d;
+      }
+      &.failed {
+        background-color: #ff6633;
+        color: #712d17;
+      }
+      &.manual {
+        background-color: #4d74fd;
+        color: #1f347e;
+      }
+    }
+  }
+}
