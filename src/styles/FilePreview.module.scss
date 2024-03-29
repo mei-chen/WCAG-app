@@ -1,0 +1,141 @@
+.preview {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s;
+
+  background-color: #ffffff;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+  padding: 1rem 2rem;
+
+  &.dark {
+    background-color: #1d2125;
+    .detailsWrapper {
+      .details {
+        .iconWrapper {
+          background-color: #542d59;
+        }
+        .fileDetails {
+          .fileName {
+            color: #ffffff;
+          }
+
+          .fileSize {
+            color: #879195;
+          }
+        }
+      }
+      .actions {
+        .cancel {
+          color: #879195;
+        }
+      }
+    }
+    .progressBar {
+      .whole {
+        background-color: #879195;
+      }
+
+      .progress {
+        background-color: #f080ff;
+      }
+    }
+  }
+
+  .detailsWrapper {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .details {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+
+      .iconWrapper {
+        aspect-ratio: 1 / 1;
+        width: 2.5rem;
+        border-radius: 50%;
+        background-color: #f6e9f8;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        img {
+          aspect-ratio: 1 / 1;
+          width: 55%;
+          object-fit: contain;
+        }
+      }
+      .fileDetails {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        .fileName {
+          font-size: 1rem;
+          color: #484b6a;
+        }
+
+        .fileSize {
+          font-size: 0.9rem;
+          color: #9394a5;
+        }
+      }
+    }
+    .actions {
+      display: flex;
+      flex-direction: row;
+      gap: 1.5rem;
+      align-items: center;
+      justify-content: center;
+
+      .cancel {
+        font-size: 1.5rem;
+        color: #9394a5;
+      }
+
+      .delete {
+        width: 1.25rem;
+        aspect-ratio: 1 / 1;
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+        }
+      }
+
+      .view {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #a220bc;
+      }
+    }
+  }
+
+  .progressBar {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .whole {
+      width: 100%;
+      height: 0.25rem;
+      background-color: #9394a5;
+      border-radius: 5px;
+      position: absolute;
+    }
+
+    .progress {
+      height: 0.25rem;
+      background-color: #a220bc;
+      border-radius: 5px;
+      position: absolute;
+    }
+  }
+}

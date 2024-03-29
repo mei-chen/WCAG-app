@@ -2,12 +2,10 @@
 
 import React, { useState } from "react";
 import styles from "../styles/Category.module.scss";
-import { MdExpandMore } from "react-icons/md";
 import { useAppStatesContext } from "@/contexts/States";
 
 export default function Category({ title, data = [] }) {
   const [selected, setSelected] = useState([]);
-  const [expanded, setExpanded] = useState(false);
 
   const { darkMode } = useAppStatesContext();
 
@@ -19,17 +17,7 @@ export default function Category({ title, data = [] }) {
     }
   };
   return (
-    <div
-      className={`${styles.category} ${expanded && styles.expanded} ${
-        darkMode && styles.dark
-      }`}
-    >
-      <div className={styles.header}>
-        <div>{title}</div>
-        <div className={styles.expand} onClick={() => setExpanded(!expanded)}>
-          <MdExpandMore />
-        </div>
-      </div>
+    <div className={`${styles.category} ${darkMode && styles.dark}`}>
       <div className={styles.body}>
         <table className="text-left text-sm font-light ">
           <thead className="border-b font-medium border-none">

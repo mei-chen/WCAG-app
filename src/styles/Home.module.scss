@@ -1,6 +1,6 @@
 #home {
   padding: 4rem;
-  padding-top: 6rem;
+  padding-top: 7rem;
   min-height: 100vh;
   background-color: #fafafa;
   display: flex;
@@ -13,9 +13,11 @@
     background-color: #171b1f;
     color: #f2f2f2;
 
-    .titleWrapper {
-      .title {
-        color: #fafafa;
+    .headerWrapper {
+      .titleWrapper {
+        .title {
+          color: #ffffff;
+        }
       }
     }
 
@@ -23,10 +25,6 @@
       .button {
         background: #fafafa;
         color: #171b1f;
-
-        // &:hover {
-        //   background-color: #f080ff;
-        // }
       }
       .fixitButton {
         background: linear-gradient(135deg, #f080ff, #00c3c0);
@@ -35,50 +33,27 @@
     }
   }
 
-  .analyzingModal {
-    top: 0;
-    left: 0;
-    position: fixed;
-    height: 100%;
-    width: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #fafafa;
+  .headerWrapper {
+    width: 60%;
+    .titleWrapper {
+      .title {
+        margin-bottom: 1rem;
+        font-size: 48px;
+        font-weight: 700;
+        color: #484b6a;
+        transition: all 0.2s;
+      }
+    }
 
-    .analyzing {
+    .uploadAndPreview {
       display: flex;
-      flex-direction: row;
-      align-items: center;
+      flex-direction: column;
       justify-content: center;
-      gap: 0.5rem;
-      font-size: 2rem;
-    }
-  }
+      gap: 2rem;
 
-  .titleWrapper {
-    .title {
-      font-size: 3rem;
-      font-weight: 700;
-      color: #171b1f;
-      transition: all 0.2s;
-    }
-  }
-
-  .uploadAndPreview {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 3rem;
-
-    .uploadWrapper {
-      width: 400px;
-    }
-
-    .preview {
-      width: 400px;
+      .uploadWrapper {
+        width: 100%;
+      }
     }
   }
 

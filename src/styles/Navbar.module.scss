@@ -1,17 +1,36 @@
 #navbar {
-  padding: 1rem 2rem;
+  padding: 0.5rem 3rem;
   position: fixed;
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
   box-shadow: 0 4px 6px -6px #222;
-  background-color: #fff;
+  background-color: #ffffff;
   transition: all 0.2s;
 
   &.dark {
-    background: #15191c;
+    background: #171b1f;
     box-shadow: 0 4px 6px -6px #f2f2f2;
     color: #fafafa;
+
+    .logoWrapper {
+      color: #ffffff;
+    }
+  }
+
+  .logoWrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #484b6a;
+
+    img {
+      width: 6rem;
+      aspect-ratio: 140 / 100;
+      object-fit: contain;
+    }
   }
 }

@@ -8,7 +8,14 @@ export default function Navbar() {
 
   return (
     <nav id={styles.navbar} className={`${darkMode && styles.dark}`}>
-      <h1 className="text-xl font-bold">Vision AI</h1>
+      <div className={styles.logoWrapper}>
+        {darkMode ? (
+          <img src="/logoDark.svg" alt="Vision AI" />
+        ) : (
+          <img src="/logoLight.svg" alt="Vision AI" />
+        )}
+        <div className={styles.logoText}>Vision AI</div>
+      </div>
       <ThemeToggle />
     </nav>
   );

@@ -6,55 +6,49 @@ import styles from "../styles/Home.module.scss";
 import UploadFile from "@/components/UploadFile";
 import { LuLoader2 } from "react-icons/lu";
 import { useAppStatesContext } from "@/contexts/States";
+import FilePreview from "@/components/FilePreview";
 
 export default function Home() {
   const [previewFile, setPreviewFile] = useState(null);
   const [isAnalyzeDone, SetIsAnalyzeDone] = useState(null);
-  // TODO: Add items state
-  const [items, setItems] = useState([]);
 
-  const { darkMode, setDarkMode } = useAppStatesContext();
+  const { darkMode } = useAppStatesContext();
 
-  const categoriesRef = useRef(null);
-
-  useEffect(() => {
-    if (isAnalyzeDone === true) {
-      categoriesRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [isAnalyzeDone]);
+  // useEffect(() => {
+  //   if (isAnalyzeDone === true) {
+  //     categoriesRef.current.scrollIntoView({ behavior: "smooth" });
+  //   }
+  // }, [isAnalyzeDone]);
 
   return (
     <main id={styles.home} className={`${darkMode && styles.dark}`}>
-      {isAnalyzeDone === false && (
-        <div className={styles.analyzingModal}>
-          <div className={styles.analyzing}>
-            <LuLoader2 className="animate-spin" />
-            Analyzing...
+      <div className={styles.headerWrapper}>
+        <div className={styles.titleWrapper}>
+          <h1 className={styles.title}>WCAG Scan</h1>
+        </div>
+        <div className={styles.uploadAndPreview}>
+          <div className={styles.uploadWrapper}>
+            <UploadFile
+              setPreviewFile={setPreviewFile}
+              SetIsAnalyzeDone={SetIsAnalyzeDone}
+              isAnalyzeDone={isAnalyzeDone}
+              previewFile={previewFile}
+            />
           </div>
-        </div>
-      )}
-      <div className={styles.titleWrapper}>
-        <h1 className={styles.title}>WCAG Scan</h1>
-      </div>
-      <div className={styles.uploadAndPreview}>
-        <div className={styles.uploadWrapper}>
-          <UploadFile
-            setPreviewFile={setPreviewFile}
-            SetIsAnalyzeDone={SetIsAnalyzeDone}
-          />
-        </div>
 
-        {previewFile && (
-          <div className={styles.preview}>
-            <iframe
-              src={URL.createObjectURL(previewFile)}
-              width="100%"
-              height="100%"
-            ></iframe>
-          </div>
-        )}
+          {previewFile && (
+            <FilePreview
+              isAnalyzeDone={isAnalyzeDone}
+              file={previewFile}
+              progress={82}
+              timeToFinish={19}
+              setPreviewFile={setPreviewFile}
+              setIsAnalyzeDone={SetIsAnalyzeDone}
+            />
+          )}
+        </div>
       </div>
-      {previewFile && (
+      {/* {previewFile && (
         <div className={styles.categoriesWrapper} ref={categoriesRef}>
           <Category
             title={"Accessibility Rules"}
@@ -139,7 +133,7 @@ export default function Home() {
             Fix {items.length} items
           </button>
         </div>
-      )}
+      )} */}
     </main>
   );
 }

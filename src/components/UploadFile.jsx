@@ -1,45 +1,92 @@
 "use client";
+import { useRef } from "react";
+import styles from "../styles/UploadFile.module.scss";
+import { useAppStatesContext } from "@/contexts/States";
 
-export default function UploadFile({ setPreviewFile, SetIsAnalyzeDone }) {
+export default function UploadFile({
+  setPreviewFile,
+  SetIsAnalyzeDone,
+  isAnalyzeDone,
+  previewFile,
+}) {
+  const { darkMode } = useAppStatesContext();
+  const inputFileRef = useRef(null);
+
   const onUpload = (event) => {
-    SetIsAnalyzeDone(false);
-    const file = event.target.files[0];
-    setTimeout(() => {
+    SetIsAnalyzeDone(null);
+    setPreviewFile(null);
+
+    if (event.target.files && event.target.files.length > 0) {
+      const file = new File(
+        [event.target.files[0]],
+        event.target.files[0].name,
+        {
+          type: event.target.files[0].type,
+        }
+      );
+
       setPreviewFile(file);
-      SetIsAnalyzeDone(true);
-    }, 1000);
+
+      setTimeout(() => {
+        SetIsAnalyzeDone(true);
+      }, 1000);
+    } else {
+      console.error("No file selected.");
+    }
+    if (inputFileRef.current) inputFileRef.current.value = "";
   };
+
   return (
-    <div className="flex items-center justify-center w-full">
+    <div className="flex flex-col justify-center column w-full gap-2">
+      <div className="text-lg">Upload a file to analyze</div>
       <label
         htmlFor="dropzone-file"
-        className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+        className={`${styles.filePlaceholder} ${
+          darkMode && styles.dark
+        } flex flex-col items-center justify-center w-full h-64 cursor-pointer`}
       >
-        <div className="flex flex-col items-center justify-center pt-5 pb-6">
-          <svg
-            className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 20 16"
+        {isAnalyzeDone !== null && isAnalyzeDone !== true ? (
+          <div
+            className="text-lg"
+            style={{ color: darkMode ? "#FFFFFF" : "#484B6A" }}
           >
-            <path
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-            />
-          </svg>
-          <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-            <span className="font-semibold">Click to upload</span> or drag and
-            drop
-          </p>
-          <p className="text-xs text-gray-500 dark:text-gray-400">
-            PDF (MAX. 100MB)
-          </p>
-        </div>
+            Analyzing...
+          </div>
+        ) : (
+          <div className="flex flex-col items-center justify-center pt-5 pb-6 gap-2">
+            <div className={styles.iconWrapper}>
+              {darkMode ? (
+                <img src="/icons/uploadIconDark.svg" />
+              ) : (
+                <img src="/icons/uploadIconLight.svg" />
+              )}
+            </div>
+            <p
+              className="text-lg"
+              style={{ color: darkMode ? "#FFFFFF" : "#484B6A" }}
+            >
+              Drag and drop your file here
+            </p>
+            <p
+              className="text-lg"
+              style={{ color: darkMode ? "#879195" : "#9394A5" }}
+            >
+              -or-
+            </p>
+            <p
+              className="text-lg"
+              style={{
+                color: darkMode ? "#F080FF" : "#A220BC",
+                textDecoration: "underline",
+              }}
+            >
+              Browse files
+            </p>
+          </div>
+        )}
+
         <input
+          ref={inputFileRef}
           id="dropzone-file"
           type="file"
           className="hidden"
@@ -47,6 +94,13 @@ export default function UploadFile({ setPreviewFile, SetIsAnalyzeDone }) {
           onChange={onUpload}
         />
       </label>
+      <div
+        className="flex justify-between text-sm"
+        style={{ color: darkMode ? "#879195" : "#9394A5" }}
+      >
+        <span className="">Supported: PDF, DOC, DOCX, XLS</span>
+        <span>Maximum size: 200MB</span>
+      </div>
     </div>
   );
 }
