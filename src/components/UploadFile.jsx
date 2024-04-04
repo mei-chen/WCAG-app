@@ -5,15 +5,14 @@ import { useAppStatesContext } from "@/contexts/States";
 
 export default function UploadFile({
   setPreviewFile,
-  SetIsAnalyzeDone,
-  isAnalyzeDone,
-  previewFile,
+  setIsUploadingDone,
+  isUploadingDone,
 }) {
   const { darkMode } = useAppStatesContext();
   const inputFileRef = useRef(null);
 
   const onUpload = (event) => {
-    SetIsAnalyzeDone(null);
+    setIsUploadingDone(null);
     setPreviewFile(null);
 
     if (event.target.files && event.target.files.length > 0) {
@@ -28,7 +27,7 @@ export default function UploadFile({
       setPreviewFile(file);
 
       setTimeout(() => {
-        SetIsAnalyzeDone(true);
+        setIsUploadingDone(true);
       }, 1000);
     } else {
       console.error("No file selected.");
@@ -45,7 +44,7 @@ export default function UploadFile({
           darkMode && styles.dark
         } flex flex-col items-center justify-center w-full h-64 cursor-pointer`}
       >
-        {isAnalyzeDone !== null && isAnalyzeDone !== true ? (
+        {isUploadingDone !== null && isUploadingDone !== true ? (
           <div
             className="text-lg"
             style={{ color: darkMode ? "#FFFFFF" : "#484B6A" }}

@@ -11,9 +11,17 @@ export default function Category({ title, data = [] }) {
 
   const select = (index, condition) => {
     if (condition) {
-      const newSelected = [...selected];
-      newSelected[index] = !newSelected[index];
-      setSelected(newSelected);
+      if (selected.includes(index)) {
+        const newSelected = selected.filter((value) => value !== index);
+        setSelected(newSelected);
+      } else {
+        const newSelected = [...selected];
+        newSelected.push(index);
+        const uniqueSelected = newSelected.filter(
+          (value, index, self) => self.indexOf(value) === index
+        );
+        setSelected(uniqueSelected);
+      }
     }
   };
   return (
@@ -47,7 +55,7 @@ export default function Category({ title, data = [] }) {
                       className={`${styles.selectBox} ${
                         each["Status"] != "Failed"
                           ? styles.cantSelect
-                          : selected[index]
+                          : selected.includes(index)
                           ? styles.selected
                           : ""
                       }`}
@@ -77,6 +85,16 @@ export default function Category({ title, data = [] }) {
             })}
           </tbody>
         </table>
+        <button className={styles.fixButton}>
+          {darkMode ? (
+            <img src="/icons/fixIconDark.svg" alt="fix icon" />
+          ) : (
+            <img src="/icons/fixIconLight.svg" alt="fix icon" />
+          )}
+          <span>
+            {selected.length == 0 ? "Fix All" : `Fix ${selected.length}`}
+          </span>
+        </button>
       </div>
     </div>
   );

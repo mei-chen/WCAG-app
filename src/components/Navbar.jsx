@@ -16,7 +16,7 @@ export default function Navbar() {
         )}
         <div className={styles.logoText}>Vision AI</div>
       </div>
-      <ThemeToggle />
+      <ThemeToggle darkMode={darkMode} setDarkMode={setDarkMode} />
     </nav>
   );
 }

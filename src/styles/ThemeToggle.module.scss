@@ -1,0 +1,64 @@
+.container {
+  width: 46px;
+  height: 46px;
+  box-sizing: border-box;
+  padding: 12px;
+  background: none;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+
+  border: 2px solid #a220bc;
+  border-radius: 6.25px;
+
+  &.dark {
+    border-color: #f080ff;
+  }
+}
+
+.sun {
+  width: 50%;
+  height: 50%;
+  position: absolute;
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(0.6) rotate(0deg);
+  transition: transform 0.3s ease-in, opacity 0.2s ease-in 0.1s;
+
+  img {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    object-fit: contain;
+  }
+  //   border-radius: 50%;
+  //   border: 2px solid #a220bc;
+}
+
+.sun.visible {
+  pointer-events: auto;
+  opacity: 1;
+  transform: scale(1) rotate(180deg);
+  transition: transform 0.3s ease-in, opacity 0.2s ease-in 0.1s;
+}
+
+.moon {
+  width: 50%;
+  height: 50%;
+  pointer-events: none;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0);
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(0.3) rotate(65deg);
+  transition: transform 0.3s ease-in, opacity 0.2s ease-in 0.1s;
+}
+
+.moon.visible {
+  pointer-events: auto;
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+  transition: transform 0.3s ease-in, opacity 0.2s ease-in 0.1s;
+}

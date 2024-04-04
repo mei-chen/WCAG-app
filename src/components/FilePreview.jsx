@@ -4,23 +4,23 @@ import { IoMdClose } from "react-icons/io";
 import Link from "next/link";
 
 export default function FilePreview({
-  isAnalyzeDone,
+  isUploadingDone,
   file,
   progress,
   timeToFinish,
   setPreviewFile,
-  setIsAnalyzeDone,
+  setIsUploadingDone,
 }) {
   const { darkMode } = useAppStatesContext();
 
   const cancelAnalysis = () => {
     setPreviewFile(null);
-    setIsAnalyzeDone(null);
+    setIsUploadingDone(null);
   };
 
   const deleteFile = () => {
     setPreviewFile(null);
-    setIsAnalyzeDone(null);
+    setIsUploadingDone(null);
   };
 
   const viewFile = () => {
@@ -59,13 +59,18 @@ export default function FilePreview({
           </div>
         </div>
         <div className={styles.actions}>
-          {!isAnalyzeDone ? (
+          {!isUploadingDone ? (
             <button className={styles.cancel} onClick={cancelAnalysis}>
               <IoMdClose />
             </button>
           ) : (
             <>
-              <Link href="/1/1" className={styles.view} onClick={viewFile}>
+              <Link
+                href="/1/1"
+                style={{ display: "none" }}
+                className={styles.view}
+                onClick={viewFile}
+              >
                 View
               </Link>
               <button className={styles.delete} onClick={deleteFile}>
@@ -79,7 +84,7 @@ export default function FilePreview({
           )}
         </div>
       </div>
-      {!isAnalyzeDone && (
+      {!isUploadingDone && (
         <div className={styles.progressBar}>
           <div className={styles.whole}></div>
           <div

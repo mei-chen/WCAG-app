@@ -23,6 +23,11 @@
           }
         }
       }
+
+      .fixButton {
+        color: #000000;
+        background-color: #f080ff;
+      }
     }
   }
 
@@ -61,6 +66,9 @@
   }
   .body {
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 
     table,
     th,
@@ -130,6 +138,26 @@
       &.manual {
         background-color: #4d74fd;
         color: #1f347e;
+      }
+    }
+
+    .fixButton {
+      align-self: flex-end;
+      padding: 0.5rem 1.5rem;
+      font-weight: 600;
+      display: flex;
+      flex-direction: row;
+      gap: 0.5rem;
+      color: #ffffff;
+      background-color: #a220bc;
+      border-radius: 6.25px;
+      align-items: center;
+      font-size: 15px;
+
+      img {
+        width: 1rem;
+        height: 1rem;
+        object-fit: contain;
       }
     }
   }

@@ -1,24 +1,54 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import Category from "@/components/Category";
 import styles from "../styles/Home.module.scss";
 import UploadFile from "@/components/UploadFile";
-import { LuLoader2 } from "react-icons/lu";
 import { useAppStatesContext } from "@/contexts/States";
 import FilePreview from "@/components/FilePreview";
+import AnalysisReport from "@/components/AnalysisReport";
+import axios from "axios";
 
 export default function Home() {
   const [previewFile, setPreviewFile] = useState(null);
-  const [isAnalyzeDone, SetIsAnalyzeDone] = useState(null);
+  const [isAnalyzeDone, setIsAnalyzeDone] = useState(null);
+  const [isUploadingDone, setIsUploadingDone] = useState(null);
+  const [extractedData, setExtractedData] = useState(null);
+  // TODO: replace with actual report
+  const [report, setReport] = useState(true);
+
+  const analysisReportWrapperRef = useRef(null);
 
   const { darkMode } = useAppStatesContext();
 
-  // useEffect(() => {
-  //   if (isAnalyzeDone === true) {
-  //     categoriesRef.current.scrollIntoView({ behavior: "smooth" });
-  //   }
-  // }, [isAnalyzeDone]);
+  useEffect(() => {
+    if (isUploadingDone) {
+      retrieveData(previewFile);
+    }
+  }, [isUploadingDone]);
+
+  const retrieveData = async (file) => {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    axios
+      .post("/api/analyze", formData)
+      .then((res) => {
+        setExtractedData(res.data);
+        console.log(res.data);
+        // scroll to the analysis report
+        setTimeout(() => {
+          const targetPosition =
+            analysisReportWrapperRef.current.getBoundingClientRect().top - 100;
+          window.scrollTo({
+            top: window.scrollY + targetPosition,
+            behavior: "smooth",
+          });
+        }, 100);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <main id={styles.home} className={`${darkMode && styles.dark}`}>
@@ -30,110 +60,28 @@ export default function Home() {
           <div className={styles.uploadWrapper}>
             <UploadFile
               setPreviewFile={setPreviewFile}
-              SetIsAnalyzeDone={SetIsAnalyzeDone}
-              isAnalyzeDone={isAnalyzeDone}
+              setIsUploadingDone={setIsUploadingDone}
+              isUploadingDone={isUploadingDone}
               previewFile={previewFile}
             />
           </div>
 
           {previewFile && (
             <FilePreview
-              isAnalyzeDone={isAnalyzeDone}
+              isUploadingDone={isUploadingDone}
               file={previewFile}
               progress={82}
               timeToFinish={19}
               setPreviewFile={setPreviewFile}
-              setIsAnalyzeDone={SetIsAnalyzeDone}
+              setIsUploadingDone={setIsUploadingDone}
             />
           )}
         </div>
       </div>
-      {/* {previewFile && (
-        <div className={styles.categoriesWrapper} ref={categoriesRef}>
-          <Category
-            title={"Accessibility Rules"}
-            data={[
-              {
-                "Rule Name": "Accessibility permission flag",
-                Status: "Success",
-                Description:
-                  "Accessibility permission flag must be set. Accessibility permission flag must be set.",
-              },
-              {
-                "Rule Name": "Accessibility permission flag",
-                Status: "Failed",
-                Description:
-                  "Accessibility permission flag must be set. Accessibility permission flag must be set.",
-              },
-              {
-                "Rule Name": "Accessibility permission flag",
-                Status: "Manual Check",
-                Description:
-                  "Accessibility permission flag must be set. Accessibility permission flag must be set.",
-              },
-            ]}
-          />
-          <Category
-            title={"Accessibility Rules"}
-            data={[
-              {
-                "Rule Name": "Accessibility permission flag",
-                Status: "Success",
-                Description:
-                  "Accessibility permission flag must be set. Accessibility permission flag must be set.",
-              },
-              {
-                "Rule Name": "Accessibility permission flag",
-                Status: "Failed",
-                Description:
-                  "Accessibility permission flag must be set. Accessibility permission flag must be set.",
-              },
-              {
-                "Rule Name": "Accessibility permission flag",
-                Status: "Manual Check",
-                Description:
-                  "Accessibility permission flag must be set. Accessibility permission flag must be set.",
-              },
-            ]}
-          />
-          <Category
-            title={"Accessibility Rules"}
-            data={[
-              {
-                "Rule Name": "Accessibility permission flag",
-                Status: "Success",
-                Description:
-                  "Accessibility permission flag must be set. Accessibility permission flag must be set.",
-              },
-              {
-                "Rule Name": "Accessibility permission flag",
-                Status: "Failed",
-                Description:
-                  "Accessibility permission flag must be set. Accessibility permission flag must be set.",
-              },
-              {
-                "Rule Name": "Accessibility permission flag",
-                Status: "Manual Check",
-                Description:
-                  "Accessibility permission flag must be set. Accessibility permission flag must be set.",
-              },
-            ]}
-          />
-        </div>
-      )}
-      {previewFile && (
-        <div className={styles.actionButtons}>
-          <button className={`${styles.selectAllButton} ${styles.button}`}>
-            Select All
-          </button>
-          <button
-            disabled={items.length == 0}
-            className={`${styles.fixitButton} ${styles.button}`}
-          >
-            Fix {items.length} items
-          </button>
-        </div>
-      )} */}
+
+      <div ref={analysisReportWrapperRef}>
+        {extractedData && report && <AnalysisReport />}
+      </div>
     </main>
   );
 }
